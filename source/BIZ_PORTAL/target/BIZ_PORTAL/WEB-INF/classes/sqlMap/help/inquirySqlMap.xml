@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<!-- 거래처 sqlMap 파일 -->
+<sqlMap namespace="help">
+
+	<typeAlias  alias="sBox" type="com.portal.common.collection.SBox"/>
+	<typeAlias  alias="sBoxList" type="com.portal.common.collection.SBoxList"/>
+	
+	<!-- 1:1문의 등록  Procedure 호출 -->
+	<procedure id="insertInquiry_SQL" parameterClass="sBox" resultClass="sBox">
+		<![CDATA[
+			{
+				call dbo.USP_insertInquiry (
+					@QA_TYPE = #QA_TYPE#
+					,@USR_NM = #USR_NM#
+					,@EMAIL = #EMAIL#
+					,@TEL_NO = #TEL_NO#
+					,@SMS_YN = #SMS_YN#
+					,@TL_NM = #TL_NM#
+					,@RMK_TXT = #RMK_TXT#
+				)
+			}
+		]]> 	
+	</procedure>
+	
+	<!-- 거래처 검색 리스트 Procedure 호출 -->
+	<!-- <procedure id="selectNoticeList_SQL" parameterClass="sBox" resultClass="sBox">
+		<![CDATA[
+			{call dbo.USP_SelectNoticeList()}
+		]]>
+	</procedure>
+	 -->
+	<!-- 거래처 검색조건에 맞게 리스트 설정 Procedure 호출-->
+	<!-- <procedure id="selectNoticeDetail_SQL" parameterClass="java.lang.String" resultClass="sBox">
+		<![CDATA[
+			{call dbo.USP_SelectSearchNotice(@CTN_ID = #ctnId#)}
+		]]>
+		
+	</procedure>  -->	
+</sqlMap>

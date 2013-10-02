@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<!-- 거래처 sqlMap 파일 -->
+<sqlMap namespace="help">
+
+	<typeAlias  alias="sBox" type="com.portal.common.collection.SBox"/>
+	<typeAlias  alias="sBoxList" type="com.portal.common.collection.SBoxList"/>
+	
+	<!--  일대일 문의 등록  Procedure 호출 -->
+	<procedure id="insertInquiry_SQL" parameterClass="sBox" resultClass="sBox">
+		<![CDATA[
+			{
+				call dbo.USP_insertInquiry (
+					@QA_TYPE = #qaType#
+					,@USR_NM = #userNm#
+					,@EMAIL = #eMail#
+					,@TEL_NO = #telNo#
+					,@SMS_YN = #smsYn#
+					,@TL_NM = #tlNm#
+					,@QST = #qst#
+				)
+			}
+		]]> 	
+	</procedure>
+	
+	<!-- 일대일 고객관리 리스트 Procedure 호출 -->
+	<procedure id="selectInquiryList_SQL" parameterClass="sBox" resultClass="sBox">
+		<![CDATA[
+			{
+				call dbo.USP_SelectInquiryList(
+					@NUM = #num#
+				   ,@ROW_SIZE = #rowSize#
+				)
+			}
+		]]>
+	</procedure>
+	
+	<!-- 일대일 Total Count Procedure 호출--> 
+	<procedure id="SelectInquiryTotalCount_SQL" parameterClass="sBox" resultClass="sBox">
+		<![CDATA[
+			{call dbo.USP_SelectInquiryTotalCount()}
+		]]>
+	</procedure>	
+</sqlMap>
