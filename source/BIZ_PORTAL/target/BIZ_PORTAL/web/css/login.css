@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+/*login*/
+
+/*
+.loginArea {width:100%; repeat-x; }
+.loginWrap {width:980px; margin:0 auto; padding:45px 0 0;}
+.loginWrap h2 {padding:0 0 26px 287px;}
+.loginWrap fieldset {width:396px; margin:0 auto; position:relative; padding:0 0 30px;}
+.loginWrap fieldset p {padding:0 0 10px;}
+.loginWrap fieldset p label {display:inline-block; width:86px;}
+.loginWrap fieldset p input {border:1px solid #cacaca; width:207px; height:20px; padding:3px 0 0 10px;}
+.loginWrap fieldset .btnLogin {position:absolute; top:0; right:0;}
+.noti_txt {no-repeat center top; text-align:center; padding:40px 0 130px; color:#ff0000;}
+*/
+
+.loginArea {width:100%;}
+.loginBox {margin:100px auto;}
+.loginBox table {width:300px; background:#dedede;}
+.loginBox table th {color:#666; font-weight:bold; padding:7px 0 5px; }
+.loginBox table td {padding:7px 0 5px 7px;}
+.loginBox table.loginBtn {position:absolute; padding:10px 0 5px 7px; }
+.noti_txt {no-repeat center top; text-align:center; padding:10px 0 10px; color:#ff0000;}
