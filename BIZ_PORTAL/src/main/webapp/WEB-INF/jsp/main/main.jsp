@@ -30,7 +30,7 @@ $(document).ready(function(){
 			<div class="notice">
 				<h2>공지사항</h2>
 				<ul>
-					<li><a href="${HOME}/help/getNotice.do">공지사항</a>
+					<li><a href="${HOME}/help/getNoticeList.do">공지사항</a>
 				</ul>
 			</div>
 			<div class="inquiry">

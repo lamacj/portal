@@ -109,5 +109,7 @@ $(document).ready(function(){
 			<a href="#" id="btn_register" name="btn_register">문의 등록</a>&nbsp;<a  href="#" id="btn_cancel" name="btn_cancel">취 소</a>
 		</div>
 	</form>	
+	
+	<a href="${HOME}/help/getInquiryList.do"> 목록  </a>
 </body>
 </html>

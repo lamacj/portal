@@ -73,7 +73,21 @@ public class InquiryDao extends SuperDao {
 		return result;
 	}
 	
+	
+	public SBox getInquiryDetail(String qaId)throws BizException {
 
+		SBox result = new SBox();
+		try {
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+qaId);
+			
+			result = (SBox) super.getSqlMapClientTemplate().queryForObject("help.selectInquiryDetail_SQL", qaId);
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!result"+result);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new BizException("21", "getInquiryDetail Dao ERROR");
+		}
+		return result;
+	}
 	
 
 }

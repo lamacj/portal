@@ -39,12 +39,12 @@ public class NoticeController extends SuperController{
 	 * @param ntcId : 공지사항순번
 	 * @return
 	 */
-	@RequestMapping(value = "/help/getNoticeDetail.do")
+	@RequestMapping(value = "/help/getNotice.do")
 	public ModelAndView getNoticeDetail(@RequestParam(value = "ntcId", required = true) String ntcId) {
 		
 		ModelAndView mav = new ModelAndView(); //.jsp로 열어질 파일
 		
-		mav.setViewName("/help/getNoticeDetail");  
+		mav.setViewName("/help/getNotice");  
 		mav.addObject("result", noticeService.getNoticeDetail(ntcId));
 		
 		return mav;
@@ -61,10 +61,10 @@ public class NoticeController extends SuperController{
 	 * @param sBox
 	 * @return
 	 */
-	@RequestMapping(value = "/help/getNotice.do")
+	@RequestMapping(value = "/help/getNoticeList.do")
 	public ModelAndView getNotice(@ModelAttribute("initBoxs") SBox sBox) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/help/getNotice");
+		mav.setViewName("/help/getNoticeList");
 		return mav;
 	}
 	
@@ -79,12 +79,12 @@ public class NoticeController extends SuperController{
 	 * @param num : 현재페이지  페이징
 	 * @return
 	 */
-	@RequestMapping(value = "/help/getNoticeListAjax.do")
+	@RequestMapping(value = "/help/getNoticeListAjaxView.do")
 	public ModelAndView getNoticeListAjax(@RequestParam(value = "searchText", required = true) String searchText,
 										  @RequestParam(value = "num", required = true) int num) {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("/help/getNoticeListPortal");
+		mav.setViewName("/help/getNoticeListAjax");
 		mav.addObject("result", noticeService.getNoticeSearchList(searchText,num));
 		return mav;
 	}

@@ -16,7 +16,8 @@ public interface InquiryService {
 
 	public SBox addInquiryForm(SBox sBox);
 	public SBox addInquiry(SBox sBox);
-	public SBox getInquiryList(SBox sBox);
+	public SBox getInquiryList(int num);
+	public SBox getInquiryDetail(String qaId);
 
 
 }

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="${JS}/jquery/jquery-1.9.1.js"></script> 
 
-<TITLE> 일대일 문의  </TITLE>
+<TITLE> 공지사항 </TITLE>
 
 <style type="text/css">
  a:link {text-decoration:none; color:#87aaec};
@@ -23,22 +23,30 @@
 $(document).ready(function(){
 		 
 	//공통 함수 : 전체 공지사항 List 검색  
-	 getList(1);
+	 getList('',1);
 	
+	//검색 버튼 : 검색관련 공지사항 List 검색  
+	 $('#btn_search').click(function(){
+	    var searchText = $("#searchText").val();
+	    var num =1;
+	    getList(searchText,num);
+	  });
+		  
      //공통함수 (Ajax) - 조회 List
-	 function getList(num){
+	 function getList(searchText,num){
 		 
     	 $.ajax({
-				url: "${HOME}/help/getInquiryListAjaxView.do",
+				url: "${HOME}/help/getNoticeListAjaxView.do",
 				type: "post",
 				dataType: "html",
-				data:{num:num},
+				data:{searchText:searchText,
+					  num:num},
 				async: true,
 				error: function(result){
 					alert(result);
 				},
 				success: function(result){
-					$("#inquiryPortal").html(result);
+					$("#noticePortal").html(result);
 					
 					var getPage = $("#getPage").val();
 					$("#getPageView").html(getPage);
@@ -58,7 +66,8 @@ $(document).ready(function(){
 	 getAjaxPage = function(num){
 	 	 $numParam = num;
 	 	
-	 	 getList(num);
+	 	 var searchText = $("#searchText").val();
+	 	 getList(searchText,num);
 	 };
 		 
 });
@@ -67,18 +76,26 @@ $(document).ready(function(){
 </head>
 
 <body>
-	<b>1:1문의</b><br>
-	<a>채권관리 서비스에 대해 궁금하신 사항을 질문해 주세요.</a>
+	<b>공지사항</b><br>
+	<a>서비스 이용에 관련된 다양한 소식들을 확인하실수 있습니다.</a>
 	
 	<hr width="600" size="2" color="#999999" align="left">
 	<font size="6" face="Monotype Corsiva" color="#777777" ></font>
 	<hr width="600" size="2" color="#999999" align="left">
 	
-	<div id="inquiryPortal"></div>
+	<div id="noticePortal"></div>
+	
+	<select name="search">
+		<option value="titleWithBody">제  목+내용</option>
+		<!-- <option value="onlyTitle">제목</option> -->
+		<!-- <option value="onlyTitle">내용</option> -->
+	</select> 
+	
+	<input type="text" name="searchText" id="searchText"  size="20"/> 
+	<a id="btn_search" href="#" > 검색 </a>
 	
 	<div id="getPageView"></div>
-	
-	<a href="${HOME}/help/addInquiryForm.do" id="btn_inquiryAdd"> 일대일 문의 등록 </a>
+
 </body>
 </html>
 

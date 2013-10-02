@@ -1,12 +1,5 @@
 package com.portal.service.help;
 
-
-//import java.math.BigDecimal;
-//import java.util.Iterator;
-
-//import org.apache.poi.ss.usermodel.CellStyle;
-//import java.math.BigDecimal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,14 +14,6 @@ import com.portal.common.collection.SBoxList;
 import com.portal.common.parent.SuperService;
 import com.portal.common.util.CommonPage;
 import com.portal.dao.help.InquiryDao;
-
-/*
-import com.curd.common.exception.BizException;
-import com.curd.common.util.CommonCode;
-import com.curd.common.util.CommonExcel;
-import com.curd.common.util.CommonPage;
-import com.curd.dao.debenture.DebentureDao;
-*/
 
 /**
  * <pre>
@@ -184,8 +169,9 @@ public class InquiryServiceImpl extends SuperService implements InquiryService {
 	
 	
 	@Override
-	public SBox getInquiryList(SBox sBox) {
+	public SBox getInquiryList(int num){
 		
+		SBox sBox = new SBox();
 		SBox result = new SBox();
 		SBoxList<SBox>	inquiryList = null;
 		try {
@@ -193,30 +179,46 @@ public class InquiryServiceImpl extends SuperService implements InquiryService {
 			// PARAMETER 초기화
 			sBox.setIfEmpty("num", 1); // 현재 페이지
 			sBox.setIfEmpty("rowSize", 4); // 목록 갯수
+			sBox.setIfEmpty("ctnId", 2); // 컨테츠 순번  portal 서비스는 = 2
 			
 			// PARAMETER값 Setting
-			
-			/*if(sBox.num!=0)
+			if(num!=0)
 				sBox.set("num",num);
-			*/
+			
 			// resultCode, resultMsg 초기화
 			result.set("resultCode", "00");
 			result.set("resultMsg", "SUCCESS");
 			
-			// 일대일 공지사항 리스트 TOTAL COUNT 조회
+			// 공지사항 정보 리스트 TOTAL COUNT 조회
 			int getTotalCount =inquiryDao.getTotalCount(sBox);
 			
 			// PC버젼 페이징 모듈 조회
-			String pcPage = commonPage.getPCPagingPrint(getTotalCount, sBox.getInt("num"), sBox.getInt("rowSize"),"getPage");
+			String pcPage = commonPage.getPCPagingPrint(getTotalCount, sBox.getInt("num"), sBox.getInt("rowSize"),"getAjaxPage");
 			
-			// 일대일 공지사항  리스트 조회
+			// 공지사항 검색 리스트 조회
 			inquiryList = inquiryDao.getInquiryList(sBox);
 			
-			// 일대일 공지사항 결과 저장
+			// 코드 변경
+			/*for (int i=0; i >inquiryList.size(); i++){
+				if((inquiryList.get(i).get("ANS_YN")).equals("Y"))
+				{
+					inquiryList.get(i).set("ANS_YN","답변완료함");
+				}else{
+					inquiryList.get(i).set("ANS_YN","답변완료함안함");
+				}
+			}*/
+			
+			
+			// 조회 결과 저장
 			result.set("inquiryList", inquiryList);
 			result.set("pcPage", pcPage);
 			
-		}catch (Exception ex) {
+		}catch (BizException biz) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			String resultCode = biz.getErrCode();
+			String resultMsg  = biz.getErrMsg();
+			log.e("BizException EXCEPTION[" + resultCode + " / " + resultMsg + "]");
+		} catch (Exception ex) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			String resultCode = "CU99";
 			String resultMsg = ex.getMessage();
@@ -226,4 +228,48 @@ public class InquiryServiceImpl extends SuperService implements InquiryService {
 		}
 		return result;
 	}
+
+
+	/**
+	 * <pre>
+	 * 
+	 * </pre>
+	 * @author JUNG MI KIM
+	 * @since 2013. 10. 2.
+	 * @version 1.0
+	 * @param qaId
+	 * @return
+	 */
+	@Override
+	public SBox getInquiryDetail(String qaId) {
+		SBox result = new SBox();
+		try {
+			// PARAMETER 초기화
+			// resultCode, resultMsg 초기화
+			result.set("resultCode", "00");
+			result.set("resultMsg", "SUCCESS");
+
+			// Common Code 초기화
+			// Paging 모듈 호출
+			// 거래처 검색 리스트 조회
+			result = inquiryDao.getInquiryDetail(qaId);
+
+		}catch (BizException biz) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			String resultCode = biz.getErrCode();
+			String resultMsg  = biz.getErrMsg();
+			log.e("BizException EXCEPTION[" + resultCode + " / " + resultMsg + "]");
+		} catch (Exception ex) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			String resultCode = "CU99";
+			String resultMsg = ex.getMessage();
+			log.e("Unknown EXCEPTION[" + resultCode + " / " + resultMsg + "]");
+		} finally {
+
+		}
+		return result;
+	}
+	
+	
+	
 }

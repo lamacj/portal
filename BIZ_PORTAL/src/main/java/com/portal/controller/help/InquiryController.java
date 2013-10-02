@@ -14,10 +14,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.portal.common.collection.SBox;
 import com.portal.common.parent.SuperController;
 import com.portal.service.help.InquiryService;
-/*
-import com.bizDebn.common.enumtype.EUserErrorCode;
-import com.bizDebn.common.session.SessionManager;
-*/
 
 /**
  * <pre>
@@ -76,15 +72,32 @@ public class InquiryController extends SuperController{
 	}
 	
 	@RequestMapping(value = "/help/getInquiryList.do")
-	public ModelAndView getCustomerList(@ModelAttribute("initBoxs") SBox sBox) {
-		System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!Do you install");
-		ModelAndView mav = new ModelAndView("help/getInquiryList");
-		mav.addObject("result", inquiryService.getInquiryList(sBox));
-		mav.addObject("sBox", sBox);
-
+	public ModelAndView getInquiryList(@ModelAttribute("initBoxs") SBox sBox) {
+		System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!Do you install"+sBox);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("help/getInquiryList");
 		return mav;
 	}
 	
+	@RequestMapping(value = "/help/getInquiryListAjaxView.do")
+	public ModelAndView getInquiryListAjax(@RequestParam(value = "num", required = true) int num) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("/help/getInquiryListAjax");
+		mav.addObject("result", inquiryService.getInquiryList(num));
+		return mav;
+	}
 	
+	@RequestMapping(value = "/help/getInquiry.do")
+	public ModelAndView getNoticeDetail(@RequestParam(value = "qaId", required = true) String qaId) {
+		
+		ModelAndView mav = new ModelAndView(); //.jsp로 열어질 파일
+		
+		mav.setViewName("/help/getInquiry");  
+		mav.addObject("result", inquiryService.getInquiryDetail(qaId));
+		
+		return mav;
+	}
 		
 }

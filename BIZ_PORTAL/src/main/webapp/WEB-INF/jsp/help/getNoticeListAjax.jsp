@@ -4,7 +4,6 @@
 
 
 <!-- 공지사항 검색 결과 및 요청 파라미터 변수 세팅 -->
-<!-- getNoticeListPortal.jsp는 Ajax를 통해 들어왔을때 보여지는 페이지로 구현한것임 -->
 <c:set var="sBox" value="${sBox}"/>
 <c:set var="noticeList" value="${result.noticeList}"/> 
 <c:set var="getPage" value="${result.pcPage}"/> 
@@ -24,7 +23,7 @@
  <c:forEach var="result" items="${noticeList}" varStatus="status">   
    <tr align="center" bgColor="#cccccc">
 	   <td width="10%" class="td"><c:out value="${result.NTC_ID}"/></td>
-	   <td width="25%" class="td"><a href="${HOME}/help/getNoticeDetail.do?ntcId=${result.NTC_ID}"><c:out value="${result.TL_NM}"/></a></td>
+	   <td width="25%" class="td"><a href="${HOME}/help/getNotice.do?ntcId=${result.NTC_ID}"><c:out value="${result.TL_NM}"/></a></td>
 	   <td width="25%" class="td"><c:out value="${result.RMK_TXT}"/></td>
 	   <td width="25%" class="td">	
 	   							<fmt:formatDate value="${result.REG_DT}"  pattern="yyyy-MM-dd"/>

@@ -42,4 +42,13 @@
 			{call dbo.USP_SelectInquiryTotalCount()}
 		]]>
 	</procedure>	
+	
+	<!-- 일대일 세부내역 조회 Procedure 호출-->
+	<procedure id="selectInquiryDetail_SQL" parameterClass="java.lang.String" resultClass="sBox">
+		<![CDATA[
+			{call dbo.USP_SelectInquiryDetail(@QA_ID = #qaId#)}
+		]]>
+		
+	</procedure> 
+	
 </sqlMap>
