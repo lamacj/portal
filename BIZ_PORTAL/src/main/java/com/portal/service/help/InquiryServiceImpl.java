@@ -174,7 +174,7 @@ public class InquiryServiceImpl extends SuperService implements InquiryService {
 		SBox sBox = new SBox();
 		SBox result = new SBox();
 		SBoxList<SBox>	inquiryList = null;
-		try {
+		try { 
 			
 			// PARAMETER 초기화
 			sBox.setIfEmpty("num", 1); // 현재 페이지
