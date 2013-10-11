@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<!-- 공지사항 sqlMap 파일 -->
+<sqlMap namespace="help">
+
+	<typeAlias  alias="sBox" type="com.portal.common.collection.SBox"/>
+	<typeAlias  alias="sBoxList" type="com.portal.common.collection.SBoxList"/>
+
+
+	<!-- 공지사항 검색조건에  맞게 리스트 설정 Procedure 호출-->
+	<procedure id="selectSearchFaq_SQL" parameterClass="sBox" resultClass="sBox">
+		<![CDATA[
+			{call dbo.USP_SelectSearchFaqList(
+						@QST = #searchText# 
+					   ,@ANS = #searchText#
+					   ,@NUM = #num#
+					   ,@ROW_SIZE = #rowSize#
+					   ,@CTN_ID = #ctnId#
+					   ,@QCL_ID = #qclId#)}
+		]]>
+		
+	</procedure>
+
+	
+	<!-- 공지사항 세부내역 조회 Procedure 호출-->
+	<procedure id="selectFaqDetail_SQL" parameterClass="java.lang.String" resultClass="sBox">
+		<![CDATA[
+			{call dbo.USP_SelectFaqDetail(@FAQ_ID = #faqId#)}
+		]]>
+		
+	</procedure> 
+	
+	
+	<!-- 공지사항 검색 Total Count Procedure 호출--> 
+	<procedure id="SelectFaqTotalCount_SQL" parameterClass="sBox" resultClass="sBox">
+		<![CDATA[
+			{call dbo.USP_SelectFaqTotalCount(
+						@QST = #searchText# 
+					   ,@ANS = #searchText#
+					   ,@QCL_ID = #qclId#)}
+		]]>
+	</procedure>
+
+
+	<!-- 공지사항 최근 3개의 리스트 설정 Procedure 호출-->
+	<procedure id="selectNewFaq_SQL" parameterClass="sBox" resultClass="sBox">
+		<![CDATA[
+			{call dbo.USP_SelectNoticeNewList(@ROWSIZE = #rowSize#)}
+		]]>
+		
+	</procedure>
+		
+</sqlMap>
