@@ -13,6 +13,9 @@
 	<!--  일대일 게시판 관리 ibatis mapping file path configuration -->
 	<sqlMap resource="sqlMap/help/inquirySqlMap.xml"/>
 	
+	<!--  FAQ 게시판 관리 ibatis mapping file path configuration -->
+	<sqlMap resource="sqlMap/help/faqSqlMap.xml"/>
+	
 </sqlMapConfig>
 
 

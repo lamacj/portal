@@ -70,7 +70,6 @@ $(document).ready(function(){
 	<b>1:1문의</b><br>
 	<a>채권관리 서비스에 대해 궁금하신 사항을 질문해 주세요.</a>
 	
-	<hr width="600" size="2" color="#999999" align="left">
 	<font size="6" face="Monotype Corsiva" color="#777777" ></font>
 	<hr width="600" size="2" color="#999999" align="left">
 	

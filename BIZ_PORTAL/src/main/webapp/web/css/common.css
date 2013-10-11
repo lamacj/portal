@@ -124,9 +124,11 @@ html {overflow-y:scroll;}
 .mainArea #boxWrap p {width:278px; height:135px; background:#fff; border:1px solid #dedede; margin:0 auto 23px;}
 .mainArea #boxWrap p img {max-width:100%; max-height:100%;}
 .mainArea #listWrap {margin:0 auto; padding:25px 20px 50px; width:280px; overflow:hidden;}
+.mainArea #listWrap div.noticeAjax {border:hidden;}
 .mainArea #listWrap div {position:relative; width:243px; padding:28px 15px 9px 20px; margin:0 0 20px; border:1px solid #dedede;}
 .mainArea #listWrap div h2 {font-size:14px; color:#707070; padding:0 0 8px;}
 .mainArea #listWrap div.notice h2 {border-bottom:4px solid #019ab6;}
+.mainArea #listWrap div.noticeAjax h2 {border-bottom:4px solid #019ab6;}
 .mainArea #listWrap div.inquiry h2 {border-bottom:4px solid #d75c19;}
 .mainArea #listWrap div.faq h2 {border-bottom:4px solid #85a357;}
 .mainArea #listWrap div p {position:absolute; top:30px; right:20px;}

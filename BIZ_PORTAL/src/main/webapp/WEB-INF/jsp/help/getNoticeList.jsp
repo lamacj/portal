@@ -24,6 +24,8 @@ $(document).ready(function(){
 		 
 	//공통 함수 : 전체 공지사항 List 검색  
 	 getList('',1);
+	 $("#notice").hide();
+	 
 	
 	//검색 버튼 : 검색관련 공지사항 List 검색  
 	 $('#btn_search').click(function(){
@@ -46,8 +48,11 @@ $(document).ready(function(){
 					alert(result);
 				},
 				success: function(result){
-					$("#noticePortal").html(result);
 					
+					$("#notice").hide();
+					$("#noticeList").show();
+					
+					$("#noticePortal").html(result);
 					var getPage = $("#getPage").val();
 					$("#getPageView").html(getPage);
 				}
@@ -69,8 +74,37 @@ $(document).ready(function(){
 	 	 var searchText = $("#searchText").val();
 	 	 getList(searchText,num);
 	 };
+	 
+	 
 		 
 });
+
+function getNotice(ntcId){
+	 //alert(ntcId);
+	  $.ajax({
+			url: "${HOME}/help/getNoticeAjax.do",
+			type: "post",
+			dataType: "html",
+			data:{ntcId:ntcId},
+			async: true,
+			error: function(result){
+				alert(result);
+			},
+			success: function(result){
+				$("#notice").show();
+				$("#noticeList").hide();
+				$("#notice").html(result);
+				/**
+				상세 정보를 봐야 하기 때문에  NoticeList를 닫아준다.  
+				목록을 누르면  자바스크릡트 쿼리를 눌러서 해당 화면 페이지로 간다. 
+				**/
+			}
+		}
+	); 
+	 
+	  
+	//location.href = '${HOME}/help/getNoticeAjax.do?ntcId='+ntcId;
+}
 
 </script>
 </head>
@@ -83,21 +117,30 @@ $(document).ready(function(){
 	<font size="6" face="Monotype Corsiva" color="#777777" ></font>
 	<hr width="600" size="2" color="#999999" align="left">
 	
-	<div id="noticePortal"></div>
+	<div id="noticeList">
+		<div id="noticePortal"></div>
+		
+		<select name="search">
+			<option value="titleWithBody">제  목+내용</option>
+			<!-- <option value="onlyTitle">제목</option> -->
+			<!-- <option value="onlyTitle">내용</option> -->
+		</select> 
+		
+		<input type="text" name="searchText" id="searchText"  size="20"/> 
+		<a id="btn_search" href="#" > 검색 </a>
+		
+		<div id="getPageView"></div>
+	</div>
 	
-	<select name="search">
-		<option value="titleWithBody">제  목+내용</option>
-		<!-- <option value="onlyTitle">제목</option> -->
-		<!-- <option value="onlyTitle">내용</option> -->
-	</select> 
-	
-	<input type="text" name="searchText" id="searchText"  size="20"/> 
-	<a id="btn_search" href="#" > 검색 </a>
-	
-	<div id="getPageView"></div>
-
+	<div id="notice">
+		상세화면 입니다.
+	</div>
 </body>
 </html>
+
+
+
+
 
 
 

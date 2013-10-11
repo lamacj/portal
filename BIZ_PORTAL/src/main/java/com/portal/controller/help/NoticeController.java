@@ -39,12 +39,11 @@ public class NoticeController extends SuperController{
 	 * @param ntcId : 공지사항순번
 	 * @return
 	 */
-	@RequestMapping(value = "/help/getNotice.do")
+	@RequestMapping(value = "/help/getNoticeAjax.do")
 	public ModelAndView getNoticeDetail(@RequestParam(value = "ntcId", required = true) String ntcId) {
-		
 		ModelAndView mav = new ModelAndView(); //.jsp로 열어질 파일
 		
-		mav.setViewName("/help/getNotice");  
+		mav.setViewName("/help/getNoticeAjax");  
 		mav.addObject("result", noticeService.getNoticeDetail(ntcId));
 		
 		return mav;
@@ -83,11 +82,27 @@ public class NoticeController extends SuperController{
 	public ModelAndView getNoticeListAjax(@RequestParam(value = "searchText", required = true) String searchText,
 										  @RequestParam(value = "num", required = true) int num) {
 		ModelAndView mav = new ModelAndView();
-		
 		mav.setViewName("/help/getNoticeListAjax");
 		mav.addObject("result", noticeService.getNoticeSearchList(searchText,num));
 		return mav;
 	}
-	
+	/**
+	 * <pre>
+	 *  공지사항 Ajax에서 새로운 공지사항 3개 보여주기
+	 * </pre>
+	 * @author JUNG MI KIM
+	 * @since 2013. 10. 2.
+	 * @version 1.0
+	 * @param sBox : 빈 값
+	 * @return
+	 */
+	@RequestMapping(value = "/help/getNoticeNewListAjaxView.do")
+	public ModelAndView getNoticeNewListAjax(@ModelAttribute("initBoxs") SBox sBox) {
+		ModelAndView mav = new ModelAndView();
 		
+		mav.setViewName("/help/getNoticeNewListAjax");
+		mav.addObject("result", noticeService.getNoticeNewList(sBox));
+		return mav;
+	}
+	
 }

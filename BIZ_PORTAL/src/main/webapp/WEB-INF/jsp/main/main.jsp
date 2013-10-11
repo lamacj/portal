@@ -11,6 +11,21 @@
 <script type="text/javascript" src="${JS}/jquery/jquery-1.9.1.js"></script> 
 <script type="text/javascript">
 $(document).ready(function(){
+	
+	 $.ajax({
+			url: "${HOME}/help/getNoticeNewListAjaxView.do",
+			type: "post",
+			dataType: "html",
+			async: true,
+			error: function(result){
+				alert(result);
+			},
+			success: function(result){
+				$("#noticeAjax").html(result);
+			}
+		}
+	); 
+	 
 });
 </script>
 
@@ -32,7 +47,9 @@ $(document).ready(function(){
 				<ul>
 					<li><a href="${HOME}/help/getNoticeList.do">공지사항</a>
 				</ul>
+						<!-- <div id="noticeAjax"></div> 채권 Ajax TEST-->
 			</div>
+			
 			<div class="inquiry">
 				<h2>1:1문의</h2>
 				<ul>
@@ -42,7 +59,7 @@ $(document).ready(function(){
 			<div class="faq">
 				<h2>FAQ</h2>
 				<ul>
-					<li><a href="#">FAQ</a></li>
+					<li><a href="${HOME}/help/getFaqList.do">FAQ</a></li>
 				</ul>
 			</div>
 		</section>

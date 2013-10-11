@@ -16,5 +16,6 @@ public interface NoticeService {
 	//public SBox getNoticeList(SBox sBox);
 	public SBox getNoticeDetail(String ctnId);
 	public SBox getNoticeSearchList(String searchText, int num);
+	public SBox getNoticeNewList(SBox sBox);
 
 }

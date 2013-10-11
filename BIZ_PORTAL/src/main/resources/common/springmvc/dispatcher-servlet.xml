@@ -36,4 +36,15 @@
 		</property>
 	</bean>
 	
+	<!-- JSON Configuration -->
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+	<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean> 
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> 
+ 		<property name="messageConverters"> 	
+	    	<list> 
+	    		<ref bean="jacksonMessageConverter"/> 
+	    	</list> 
+	    </property> 
+	</bean>
+	
 </beans>

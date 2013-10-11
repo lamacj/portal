@@ -1,12 +1,10 @@
 package com.portal.dao.help;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
-import com.portal.common.exception.BizException;
 import com.portal.common.collection.SBox;
 import com.portal.common.collection.SBoxList;
+import com.portal.common.exception.BizException;
 import com.portal.common.parent.SuperDao;
 
 
@@ -121,4 +119,17 @@ public class NoticeDao extends SuperDao {
 		return resultList;
 	}
 
+	public SBoxList<SBox> getNoticeNewList(SBox sBox)throws BizException {
+
+		SBoxList<SBox> resultList = null;
+		try {
+			resultList = new SBoxList<SBox> (super.getSqlMapClientTemplate().queryForList("help.selectNewNotice_SQL", sBox));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new BizException("21", "getNoticeNewList Dao ERROR");
+		}
+		return resultList;
+	}
+	
+	
 }

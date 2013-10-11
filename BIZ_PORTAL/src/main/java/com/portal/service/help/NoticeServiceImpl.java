@@ -99,7 +99,7 @@ public class NoticeServiceImpl extends SuperService implements NoticeService {
 			
 			// PARAMETER 초기화
 			sBox.setIfEmpty("num", 1); // 현재 페이지
-			sBox.setIfEmpty("rowSize", 4); // 목록 갯수
+			sBox.setIfEmpty("rowSize", 10); // 목록 갯수
 			sBox.setIfEmpty("searchText", searchText); // 목록 갯수
 			sBox.setIfEmpty("ctnId", 2); // 컨테츠 순번  portal 서비스는 = 2
 			
@@ -126,6 +126,44 @@ public class NoticeServiceImpl extends SuperService implements NoticeService {
 			// 조회 결과 저장
 			result.set("noticeList", noticeList);
 			result.set("pcPage", pcPage);
+			result.set("basicInfo",sBox);
+			result.set("getTotalCount",getTotalCount);
+			
+		}catch (BizException biz) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			String resultCode = biz.getErrCode();
+			String resultMsg  = biz.getErrMsg();
+			log.e("BizException EXCEPTION[" + resultCode + " / " + resultMsg + "]");
+		} catch (Exception ex) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			String resultCode = "CU99";
+			String resultMsg = ex.getMessage();
+			log.e("Unknown EXCEPTION[" + resultCode + " / " + resultMsg + "]");
+		} finally {
+
+		}
+		return result;
+	}
+	
+	@Override
+	public SBox getNoticeNewList(SBox sBox){
+		
+		SBox result = new SBox();
+		SBoxList<SBox>	noticeNewList = null;
+		try {
+			
+			// PARAMETER 초기화
+			sBox.setIfEmpty("rowSize", 3); // 목록 갯수
+			
+			// resultCode, resultMsg 초기화
+			result.set("resultCode", "00");
+			result.set("resultMsg", "SUCCESS");
+			
+			// 공지사항 검색 리스트 조회
+			noticeNewList = noticeDao.getNoticeNewList(sBox);
+			
+			// 조회 결과 저장
+			result.set("noticeNewList", noticeNewList);
 			
 		}catch (BizException biz) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

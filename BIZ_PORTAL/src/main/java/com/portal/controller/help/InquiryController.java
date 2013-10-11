@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -43,7 +44,11 @@ public class InquiryController extends SuperController{
 	@RequestMapping(value = "/help/addInquiryForm.do")
 	public ModelAndView addInquiryForm(@ModelAttribute("initBoxs") SBox sBox) {
 		ModelAndView mav = new ModelAndView(); //.jsp로 열어질 파일
+		
 		mav.setViewName("help/addInquiryForm");  
+		mav.addObject("result", inquiryService.getBaseInfo(sBox));
+		
+		//System.out.println(sBox);
 		
 		return mav;
 	}
@@ -60,21 +65,20 @@ public class InquiryController extends SuperController{
 	 * @return
 	 */
 	@RequestMapping(value = "/help/addInquiry.do")
+	@ResponseBody
 	public ModelAndView addInquiry(@ModelAttribute("initBoxs") SBox sBox) {
 		
+		ModelAndView mav = new ModelAndView("jsonview");
 		SBox resultBox = inquiryService.addInquiry(sBox);
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/help/getInquiryList.do"); 
-		mav.addObject("sBox", resultBox);
-		
+		String qaId = resultBox.getString("QAID");
+		/*System.out.println("qaIdqaIdqaIdqaIdqaId"+qaId);*/
+		//mav.setViewName("redirect:/help/getInquiryList.do"); 
+		mav.addObject("qaId", qaId);
 		return mav;
 	}
 	
 	@RequestMapping(value = "/help/getInquiryList.do")
 	public ModelAndView getInquiryList(@ModelAttribute("initBoxs") SBox sBox) {
-		System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!Do you install"+sBox);
-		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("help/getInquiryList");
 		return mav;
@@ -99,5 +103,14 @@ public class InquiryController extends SuperController{
 		
 		return mav;
 	}
+	
+	@RequestMapping(value = "/help/getInquiryPreViewListAjaxView.do")
+	public ModelAndView getInquiryPreListAjax(@ModelAttribute("initBoxs") SBox sBox) {
+		ModelAndView mav = new ModelAndView();
 		
+		mav.setViewName("/help/getInquiryPreViewListAjax");
+		mav.addObject("result", inquiryService.getInquiryPreViewList(sBox));
+		return mav;
+	}
+
 }

@@ -40,5 +40,13 @@
 		]]>
 	</procedure>
 
+
+	<!-- 공지사항 최근 3개의 리스트 설정 Procedure 호출-->
+	<procedure id="selectNewNotice_SQL" parameterClass="sBox" resultClass="sBox">
+		<![CDATA[
+			{call dbo.USP_SelectNoticeNewList(@ROWSIZE = #rowSize#)}
+		]]>
+		
+	</procedure>
 		
 </sqlMap>

@@ -74,20 +74,45 @@ public class InquiryDao extends SuperDao {
 	}
 	
 	
-	public SBox getInquiryDetail(String qaId)throws BizException {
+	public SBoxList<SBox> getInquiryDetail(String qaId)throws BizException {
 
-		SBox result = new SBox();
+		SBoxList<SBox>  resultList = null;
 		try {
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+qaId);
-			
-			result = (SBox) super.getSqlMapClientTemplate().queryForObject("help.selectInquiryDetail_SQL", qaId);
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!result"+result);
+			//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+qaId);
+			resultList =new SBoxList<SBox> (super.getSqlMapClientTemplate().queryForList("help.selectInquiryDetail_SQL", qaId));
+			//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!result"+resultList);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new BizException("21", "getInquiryDetail Dao ERROR");
 		}
-		return result;
+		return resultList;
 	}
 	
+	public SBoxList<SBox> getInquiryPreViewList(SBox sBox)throws BizException {
 
+		SBoxList<SBox> resultList = null;
+		try {
+			resultList = new SBoxList<SBox> (super.getSqlMapClientTemplate().queryForList("help.selectInquiryPreViewList_SQL", sBox));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new BizException("21", "selectInquiryPreViewList_SQL Dao ERROR");
+		}
+		return resultList;
+	}
+	
+	public SBox getUserInfo(SBox sBox)  throws BizException{ 
+
+		SBox returnBox = null;
+		try {
+			returnBox = (SBox) super.getSqlMapClientTemplate().queryForObject("help.SelectUserByLoginId_SQL", sBox);
+			//userInfo[LOGIN_ID[717171717],TEL_NO[02-987-1234],EMAIL[maytensi@gmail.com],LOGIN_PW[123],USR_NM[김정미]]
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new BizException("21", "SelectUserByLoginId_SQL Dao ERROR");
+		}
+		return returnBox;
+	}
+	
+	
+	
 }
