@@ -27,7 +27,9 @@ public class InquiryDao extends SuperDao {
 	 * @author JUNG MI KIM
 	 * @since 2013. 10. 1.
 	 * @version 1.0
-	 * @param sBox
+	 * @param sBox -ctnId:컨텐츠 순번,  qstType:질문자 유형, qstId: 질문자 식별자, eMail:이메일, telNo:전화번호
+	 *               qst:답변 질문내용, tlNm:질문 제목, userNm:사용자이름, reQst:재질문여부, qclId:질문분류식별자
+	 *               smsYn:SMS수신여부, ansYn:답변완료여부, chkYn:질문확인여부
 	 * @return
 	 * @throws BizException
 	 */
@@ -43,7 +45,17 @@ public class InquiryDao extends SuperDao {
 		return returnBox;
 	}
 	
-	
+	/**
+	 * <pre>
+	 * 1:1문의 List조회 화면
+	 * </pre>
+	 * @author JUNG MI KIM
+	 * @since 2013. 10. 11.
+	 * @version 1.0
+	 * @param sBox - num: 혅재화면 ,ctnId: 컨텐츠 순번, rowSize: 화면 갯수지정
+	 * @return
+	 * @throws BizException
+	 */
 	public SBoxList<SBox> getInquiryList(SBox sBox)  throws BizException{ 
 
 		SBoxList<SBox> resultList = null;
@@ -59,7 +71,17 @@ public class InquiryDao extends SuperDao {
 	}
 	
 	
-	
+	/**
+	 * <pre>
+	 * 전체 List 갯수 가지고 오기
+	 * </pre>
+	 * @author JUNG MI KIM
+	 * @since 2013. 10. 11.
+	 * @version 1.0
+	 * @param sBox - num: 혅재화면 ,ctnId: 컨텐츠 순번, rowSize: 화면 갯수지정
+	 * @return
+	 * @throws BizException
+	 */
 	public int getTotalCount(SBox sBox)  throws BizException{ 
 
 		int result = 0;
@@ -73,14 +95,22 @@ public class InquiryDao extends SuperDao {
 		return result;
 	}
 	
-	
+	/**
+	 * <pre>
+	 * 1:1문의 상세 화면 조회 
+	 * </pre>
+	 * @author JUNG MI KIM
+	 * @since 2013. 10. 11.
+	 * @version 1.0
+	 * @param qaId :회원문의 답변순번
+	 * @return
+	 * @throws BizException
+	 */
 	public SBoxList<SBox> getInquiryDetail(String qaId)throws BizException {
 
 		SBoxList<SBox>  resultList = null;
 		try {
-			//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+qaId);
 			resultList =new SBoxList<SBox> (super.getSqlMapClientTemplate().queryForList("help.selectInquiryDetail_SQL", qaId));
-			//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!result"+resultList);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new BizException("21", "getInquiryDetail Dao ERROR");
@@ -88,6 +118,17 @@ public class InquiryDao extends SuperDao {
 		return resultList;
 	}
 	
+	/**
+	 * <pre>
+	 *  1:1문의 등록화면 5개 최신글 가지고오기
+	 * </pre>
+	 * @author JUNG MI KIM
+	 * @since 2013. 10. 11.
+	 * @version 1.0
+	 * @param sBox - rowSize : 보여질 갯수 표기
+	 * @return
+	 * @throws BizException
+	 */
 	public SBoxList<SBox> getInquiryPreViewList(SBox sBox)throws BizException {
 
 		SBoxList<SBox> resultList = null;
@@ -100,12 +141,22 @@ public class InquiryDao extends SuperDao {
 		return resultList;
 	}
 	
+	/**
+	 * <pre>
+	 * 1:1문의 등록 폼에서 User 값 에 맞게 Setting 
+	 * </pre>
+	 * @author JUNG MI KIM
+	 * @since 2013. 10. 11.
+	 * @version 1.0
+	 * @param sBox - userInfo: 사용자 아이디 , TEL_NO: 전화번호, LOGIN_PW : 비밀번호 , USR_NM : 사용자이름
+	 * @return
+	 * @throws BizException
+	 */
 	public SBox getUserInfo(SBox sBox)  throws BizException{ 
 
 		SBox returnBox = null;
 		try {
 			returnBox = (SBox) super.getSqlMapClientTemplate().queryForObject("help.SelectUserByLoginId_SQL", sBox);
-			//userInfo[LOGIN_ID[717171717],TEL_NO[02-987-1234],EMAIL[maytensi@gmail.com],LOGIN_PW[123],USR_NM[김정미]]
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new BizException("21", "SelectUserByLoginId_SQL Dao ERROR");

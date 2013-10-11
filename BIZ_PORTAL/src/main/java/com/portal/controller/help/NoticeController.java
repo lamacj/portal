@@ -1,7 +1,5 @@
 package com.portal.controller.help;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -57,11 +55,13 @@ public class NoticeController extends SuperController{
 	 * @author JUNG MI KIM
 	 * @since 2013. 9. 30.
 	 * @version 1.0
-	 * @param sBox
+	 * @param sBox : NULL
 	 * @return
 	 */
 	@RequestMapping(value = "/help/getNoticeList.do")
 	public ModelAndView getNotice(@ModelAttribute("initBoxs") SBox sBox) {
+		System.out.println("공지사항 공통 List 조회 ( 검색, 페이징처리)"+sBox);
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/help/getNoticeList");
 		return mav;

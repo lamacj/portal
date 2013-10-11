@@ -58,7 +58,7 @@
 	</procedure> 
 	
 	
-	<!-- 일대일문의 최근 3개의 리스트 설정 Procedure 호출-->
+	<!-- 일대일문의 최근 5개의 리스트 설정 Procedure 호출-->
 	<procedure id="selectInquiryPreViewList_SQL" parameterClass="sBox" resultClass="sBox">
 		<![CDATA[
 			{call dbo.USP_selectInquiryPreViewList(@ROWSIZE = #rowSize#)}

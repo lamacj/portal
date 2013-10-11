@@ -91,34 +91,18 @@ public class NoticeDao extends SuperDao {
 		return result;
 	}
 	
-	
-	
+
 	/**
 	 * <pre>
-	 *   게시판  글 등록 Dao Method
+	 * 채권 공지사항에서 뿌려주는 화면
 	 * </pre>
-	 * 
 	 * @author JUNG MI KIM
-	 * @since 2013. 9. 13.
+	 * @since 2013. 10. 11.
 	 * @version 1.0
-	 * @param sBox
-	 *            
-	 * @return resultList : 거래처 검색 리스트
+	 * @param sBox -ROWSIZE : 보여질 갯수 입력
+	 * @return
+	 * @throws BizException
 	 */
-	public SBoxList<SBox> addMainList(SBox sBox)throws BizException {
-
-		SBoxList<SBox> resultList = null;
-		
-		try {
-			resultList = new SBoxList<SBox>(super.getSqlMapClientTemplate().queryForList("notice.addtNoticeList_SQL", sBox));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new BizException("21", "addMainList Dao ERROR");
-		}
-
-		return resultList;
-	}
-
 	public SBoxList<SBox> getNoticeNewList(SBox sBox)throws BizException {
 
 		SBoxList<SBox> resultList = null;
