@@ -17,7 +17,7 @@ import com.portal.common.exception.BizException;
 
 /**
  * <pre>
- *    faq Service Implements Class
+ *    FAQ Service Implements Class
  * </pre>
  * 
  * @author JUNG MI KIM
@@ -44,6 +44,7 @@ public class FaqServiceImpl extends SuperService implements FaqService {
 	 * @version 1.0
 	 * @param searchText : 검색어
 	 * @param num : 현재화면
+	 * @param qclId : 질문분류식별자
 	 * @return
 	 */
 	@Override
@@ -114,7 +115,7 @@ public class FaqServiceImpl extends SuperService implements FaqService {
 	 * @author JUNG MI KIM
 	 * @since 2013. 9. 30.
 	 * @version 1.0
-	 * @param ntcId : 공지사항 순번
+	 * @param faqId : 공지사항 순번
 	 * @return
 	 */
 	@Override

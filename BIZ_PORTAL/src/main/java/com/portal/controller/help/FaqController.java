@@ -1,7 +1,5 @@
 package com.portal.controller.help;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,12 +13,12 @@ import com.portal.service.help.FaqService;
 
 /**
  * <pre>
- * 공지사항  공통 Controller
+ * FAQ MAIN CONTROLLER
  * </pre>
  * @author JUNG MI KIM
- * @since 2013. 9. 30.
+ * @since 2013. 10. 11.
  * @version 1.0
- * @package com.portal.controller.help.NoticeController.java
+ * @package com.portal.controller.help.FaqController.java
  */
 @Controller
 public class FaqController extends SuperController{
@@ -31,18 +29,18 @@ public class FaqController extends SuperController{
 	
 	/**
 	 * <pre>
-	 *  FAQ 세부항목 가지고 오기
+	 * FAQ 세부사항  
 	 * </pre>
 	 * @author JUNG MI KIM
-	 * @since 2013. 9. 30.
+	 * @since 2013. 10. 11.
 	 * @version 1.0
-	 * @param ntcId : 공지사항순번
+	 * @param faqId : 자주하는 질문 순번(PT_FAQ TABLE)
 	 * @return
 	 */
 	@RequestMapping(value = "/help/getFaq.do")
 	public ModelAndView getNoticeDetail(@RequestParam(value = "faqId", required = true) String faqId) {
 		
-		ModelAndView mav = new ModelAndView(); //.jsp로 열어질 파일
+		ModelAndView mav = new ModelAndView(); 
 		
 		mav.setViewName("/help/getFaq");  
 		mav.addObject("result", faqService.getFaqDetail(faqId));
@@ -58,7 +56,7 @@ public class FaqController extends SuperController{
 	 * @author JUNG MI KIM
 	 * @since 2013. 9. 30.
 	 * @version 1.0
-	 * @param sBox
+	 * @param sBox : null
 	 * @return
 	 */
 	@RequestMapping(value = "/help/getFaqList.do")
@@ -70,13 +68,14 @@ public class FaqController extends SuperController{
 	
 	/**
 	 * <pre>
-	 *  공지사항  - List(Ajax)
+	 * FAQ Ajax List 
 	 * </pre>
 	 * @author JUNG MI KIM
-	 * @since 2013. 9. 30.
+	 * @since 2013. 10. 11.
 	 * @version 1.0
-	 * @param searchText : 검색어
-	 * @param num : 현재페이지  페이징
+	 * @param searchText : 조건검색
+	 * @param num : 현재 페이지
+	 * @param qclId : 질문분류식별자
 	 * @return
 	 */
 	@RequestMapping(value = "/help/getFaqListAjaxView.do")

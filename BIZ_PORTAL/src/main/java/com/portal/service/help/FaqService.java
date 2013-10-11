@@ -13,7 +13,6 @@ import com.portal.common.collection.SBox;
  */
 public interface FaqService {
 
-	//public SBox getNoticeList(SBox sBox);
 	public SBox getFaqDetail(String faqId);
 	public SBox getFaqSearchList(String searchText, int num, int qclId);
 

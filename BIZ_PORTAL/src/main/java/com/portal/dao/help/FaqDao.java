@@ -1,7 +1,5 @@
 package com.portal.dao.help;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import com.portal.common.exception.BizException;
@@ -40,7 +38,7 @@ public class FaqDao extends SuperDao {
 
 	/**
 	 * <pre>
-	 * 공지사항 - 공통 조회
+	 * FAQ - 공통 조회
 	 * </pre>
 	 * @author JUNG MI KIM
 	 * @since 2013. 9. 30.
@@ -71,7 +69,7 @@ public class FaqDao extends SuperDao {
 	
 	/**
 	 * <pre>
-	 * 공지사항  - List 전체갯수
+	 * FAQ  - List 전체갯수
 	 * </pre>
 	 * @author JUNG MI KIM
 	 * @since 2013. 9. 30.
@@ -84,55 +82,13 @@ public class FaqDao extends SuperDao {
 
 		int result = 0;
 		try {
-		System.out.println("SBox"+sBox);
 			result = ((SBox) super.getSqlMapClientTemplate().queryForObject("help.SelectFaqTotalCount_SQL", sBox)).getInt("totalCnt");
-		System.out.println("resultresult1"+result);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new BizException("21", "selectMainTotalCount Dao ERROR");
+			throw new BizException("21", "getTotalCount Dao ERROR");
 		}
 
 		return result;
-	}
-	
-	
-	
-	/**
-	 * <pre>
-	 *   게시판  글 등록 Dao Method
-	 * </pre>
-	 * 
-	 * @author JUNG MI KIM
-	 * @since 2013. 9. 13.
-	 * @version 1.0
-	 * @param sBox
-	 *            
-	 * @return resultList : 거래처 검색 리스트
-	 */
-	public SBoxList<SBox> addMainList(SBox sBox)throws BizException {
-
-		SBoxList<SBox> resultList = null;
-		
-		try {
-			resultList = new SBoxList<SBox>(super.getSqlMapClientTemplate().queryForList("Faq.addtFaqList_SQL", sBox));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new BizException("21", "addMainList Dao ERROR");
-		}
-
-		return resultList;
-	}
-
-	public SBoxList<SBox> getFaqNewList(SBox sBox)throws BizException {
-
-		SBoxList<SBox> resultList = null;
-		try {
-			resultList = new SBoxList<SBox> (super.getSqlMapClientTemplate().queryForList("help.selectNewFaq_SQL", sBox));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new BizException("21", "getFaqNewList Dao ERROR");
-		}
-		return resultList;
 	}
 	
 	
