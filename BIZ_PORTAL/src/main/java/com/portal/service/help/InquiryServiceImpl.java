@@ -222,6 +222,10 @@ public class InquiryServiceImpl extends SuperService implements InquiryService {
 			sBox.setIfEmpty("rowSize", 10); // 목록 갯수
 			sBox.setIfEmpty("ctnId", 2); // 컨테츠 순번  portal 서비스는 = 2
 			
+			//user정보 코드 셋팅
+			String userId = "717171717";
+			sBox.set("qstId", userId);
+			
 			// PARAMETER값 Setting
 			if(num!=0)
 				sBox.set("num",num);
@@ -242,12 +246,12 @@ public class InquiryServiceImpl extends SuperService implements InquiryService {
 			// 코드 변경
 			inquiryList=getCommonCode("ANS_YN",inquiryList);
 			
+			
 			// 조회 결과 저장
 			result.set("getTotalCount",getTotalCount);
 			result.set("inquiryList", inquiryList);
 			result.set("pcPage", pcPage);
 			result.set("basicInfo",sBox);
-			System.out.println("include get Total Count"+result);
 			
 		}catch (BizException biz) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -281,6 +285,7 @@ public class InquiryServiceImpl extends SuperService implements InquiryService {
 		SBox result = new SBox();
 		SBoxList<SBox>	inquiryList = null;
 		SBox PreNext = new SBox();
+		SBox sBox = new SBox();
 
 		try {
 			// PARAMETER 초기화
@@ -291,12 +296,16 @@ public class InquiryServiceImpl extends SuperService implements InquiryService {
 			
 			// 거래처 검색 리스트 조회
 			//result = inquiryDao.getInquiryDetail(qaId);
-			inquiryList = inquiryDao.getInquiryDetail(qaId);
+			String userId = "717171717";
+			
+			sBox.set("qaId", qaId);
+			sBox.set("qstId", userId);
+			inquiryList = inquiryDao.getInquiryDetail(sBox);
 			
 			//공통 항목 출력
 			inquiryList=getCommonCode("ANS_YN",inquiryList);	
 			
-			System.out.println("inquiryList ANS_YN이후"+inquiryList);
+			//System.out.println("inquiryList ANS_YN이후"+inquiryList);
 			
 			//CHK_YN[N],ORDER_NUM[2],CTN_ID[2],QST_ID[123456789],SMS_YN[N],TEL_NO[010-5653-2222],QA_ID[38],USR_NM[김채권],ANS_YN[N],UPD_DT[2013-10-07 09:35:20.53],QST[채권진단 문의 내용입니다],REG_DT[2013-10-07 09:35:20.53],QST_TYPE[I],QA_RESULT_ROWNUM[31],EMAIL[cheae@naver.com],RE_QST[N],QCL_ID[4]
 			if(inquiryList.size()>2){
@@ -351,10 +360,17 @@ public class InquiryServiceImpl extends SuperService implements InquiryService {
 			
 			// PARAMETER 초기화
 			sBox.setIfEmpty("rowSize", 5); // 목록 갯수
+			sBox.setIfEmpty("ctnId", 2); // 컨테츠 순번  portal 서비스는 = 2
+			
+			//User 정보
+			String userId = "717171717";
+			sBox.set("qstId", userId);
 			
 			// resultCode, resultMsg 초기화
 			result.set("resultCode", "00");
 			result.set("resultMsg", "SUCCESS");
+			
+			
 			
 			// 공지사항 검색 리스트 조회
 			inquiryPreViewList = inquiryDao.getInquiryPreViewList(sBox);

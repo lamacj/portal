@@ -37,6 +37,8 @@
 				call dbo.USP_SelectInquiryList(
 					@NUM = #num#
 				   ,@ROW_SIZE = #rowSize#
+				   ,@LOGIN_ID = #qstId#
+				   ,@CTN_ID = #ctnId#
 				)
 			}
 		]]>
@@ -45,14 +47,18 @@
 	<!-- 일대일 Total Count Procedure 호출--> 
 	<procedure id="SelectInquiryTotalCount_SQL" parameterClass="sBox" resultClass="sBox">
 		<![CDATA[
-			{call dbo.USP_SelectInquiryTotalCount()}
+			{call dbo.USP_SelectInquiryTotalCount(@LOGIN_ID = #qstId#
+												  ,@CTN_ID = #ctnId#)}
 		]]>
 	</procedure>	
 	
 	<!-- 일대일 세부내역 조회 Procedure 호출-->
-	<procedure id="selectInquiryDetail_SQL" parameterClass="java.lang.String" resultClass="sBox">
+	<procedure id="selectInquiryDetail_SQL" parameterClass="sBox" resultClass="sBox">
 		<![CDATA[
-			{call dbo.USP_SelectInquiryDetail(@QA_ID = #qaId#)}
+			{call dbo.USP_SelectInquiryDetail( @QA_ID = #qaId#
+											  ,@QST_ID = #qstId#
+											  )
+			}
 		]]>
 		
 	</procedure> 
@@ -61,7 +67,9 @@
 	<!-- 일대일문의 최근 5개의 리스트 설정 Procedure 호출-->
 	<procedure id="selectInquiryPreViewList_SQL" parameterClass="sBox" resultClass="sBox">
 		<![CDATA[
-			{call dbo.USP_selectInquiryPreViewList(@ROWSIZE = #rowSize#)}
+			{call dbo.USP_selectInquiryPreViewList(@ROWSIZE = #rowSize#
+												   ,@LOGIN_ID = #qstId#
+												   ,@CTN_ID = #ctnId#)}
 		]]>
 		
 	</procedure>

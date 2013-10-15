@@ -26,29 +26,6 @@ public class FaqController extends SuperController{
 	@Autowired
 	private FaqService faqService;
 	
-	
-	/**
-	 * <pre>
-	 * FAQ 세부사항  
-	 * </pre>
-	 * @author JUNG MI KIM
-	 * @since 2013. 10. 11.
-	 * @version 1.0
-	 * @param faqId : 자주하는 질문 순번(PT_FAQ TABLE)
-	 * @return
-	 */
-	@RequestMapping(value = "/help/getFaq.do")
-	public ModelAndView getNoticeDetail(@RequestParam(value = "faqId", required = true) String faqId) {
-		
-		ModelAndView mav = new ModelAndView(); 
-		
-		mav.setViewName("/help/getFaq");  
-		mav.addObject("result", faqService.getFaqDetail(faqId));
-		
-		return mav;
-	}
-	
-	
 	/**
 	 * <pre>
 	 * FAQ 공통 List 조회 ( 검색, 페이징처리) with Ajax 
@@ -83,9 +60,31 @@ public class FaqController extends SuperController{
 										  @RequestParam(value = "num", required = true) int num,
 										  @RequestParam(value = "qclId", required = true) int qclId) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(qclId);
+		//System.out.println(qclId);
 		mav.setViewName("/help/getFaqListAjax");
 		mav.addObject("result", faqService.getFaqSearchList(searchText,num,qclId));
+		return mav;
+	}
+	
+	
+	/**
+	 * <pre>
+	 * FAQ 세부사항  
+	 * </pre>
+	 * @author JUNG MI KIM
+	 * @since 2013. 10. 11.
+	 * @version 1.0
+	 * @param faqId : 자주하는 질문 순번(PT_FAQ TABLE)
+	 * @return
+	 */
+	@RequestMapping(value = "/help/getFaqAjax.do")
+	public ModelAndView getFaqAjax(@RequestParam(value = "faqId", required = true) String faqId) {
+		
+		ModelAndView mav = new ModelAndView(); 
+		
+		mav.setViewName("/help/getFaqAjax");  
+		mav.addObject("result", faqService.getFaqDetail(faqId));
+		
 		return mav;
 	}
 	

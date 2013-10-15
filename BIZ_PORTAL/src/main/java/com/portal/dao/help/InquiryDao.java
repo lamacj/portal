@@ -59,7 +59,7 @@ public class InquiryDao extends SuperDao {
 	public SBoxList<SBox> getInquiryList(SBox sBox)  throws BizException{ 
 
 		SBoxList<SBox> resultList = null;
-		
+		System.out.println("하드코딩 아닌데"+sBox);
 		try {
 			resultList = new SBoxList<SBox>(super.getSqlMapClientTemplate().queryForList("help.selectInquiryList_SQL", sBox));
 		} catch (Exception ex) {
@@ -106,11 +106,11 @@ public class InquiryDao extends SuperDao {
 	 * @return
 	 * @throws BizException
 	 */
-	public SBoxList<SBox> getInquiryDetail(String qaId)throws BizException {
+	public SBoxList<SBox> getInquiryDetail(SBox sBox)throws BizException {
 
 		SBoxList<SBox>  resultList = null;
 		try {
-			resultList =new SBoxList<SBox> (super.getSqlMapClientTemplate().queryForList("help.selectInquiryDetail_SQL", qaId));
+			resultList =new SBoxList<SBox> (super.getSqlMapClientTemplate().queryForList("help.selectInquiryDetail_SQL", sBox));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new BizException("21", "getInquiryDetail Dao ERROR");

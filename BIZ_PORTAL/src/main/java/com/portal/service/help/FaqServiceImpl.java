@@ -72,7 +72,7 @@ public class FaqServiceImpl extends SuperService implements FaqService {
 			if(qclId!=0)
 				sBox.set("qclId",qclId);
 			
-			System.out.println("qclIdqclIdqclIdqclId"+sBox);
+			//System.out.println("qclIdqclIdqclIdqclId"+sBox);
 			
 			// resultCode, resultMsg 초기화
 			result.set("resultCode", "00");

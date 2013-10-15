@@ -1,5 +1,7 @@
 package com.portal.controller.help;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,21 +29,44 @@ public class InquiryController extends SuperController{
 	@Autowired
 	private InquiryService inquiryService;
 	
+	
 	/**
 	 * <pre>
-	 * 1:1 등록 문의 등록화면  - Form
+	 * 고객지원 1:1 등록 화면 연결  Ajax by BIZ_PORTAL 
 	 * </pre>
 	 * @author JUNG MI KIM
-	 * @since 2013. 10. 1.
+	 * @since 2013. 10. 14.
 	 * @version 1.0
-	 * @param sBox : loginId : 사용자 ID
+	 * @param sBox : 없음
 	 * @return
 	 */
-	@RequestMapping(value = "/help/addInquiryForm.do")
-	public ModelAndView addInquiryForm(@ModelAttribute("initBoxs") SBox sBox) {
+	@RequestMapping(value = "/help/getInquiryForm.do")
+	public ModelAndView getInquiryForm(@ModelAttribute("initBoxs") SBox sBox) {
+		
 		ModelAndView mav = new ModelAndView(); 
-		mav.setViewName("help/addInquiryForm");  
+		mav.setViewName("/help/getInquiryForm");  
+		
+		return mav;
+	}
+	
+	/**
+	 * <pre>
+	 *  1:1 등록 문의 등록화면  - Form  Ajax by BIZ_PORTAL 
+	 * </pre>
+	 * @author JUNG MI KIM
+	 * @since 2013. 10. 14.
+	 * @version 1.0
+	 * @param sBox
+	 * @return
+	 */
+	@RequestMapping(value = "/help/getInquiryFormAjax.do")
+	public ModelAndView getInquiryFormAjax(@ModelAttribute("initBoxs") SBox sBox
+			, @RequestParam(value = "portalDomain", required = true) String portalDomain) {
+		ModelAndView mav = new ModelAndView(); 
+		mav.setViewName("help/getInquiryFormAjax");  
 		mav.addObject("result", inquiryService.getBaseInfo(sBox));
+		mav.addObject("portalDomain", portalDomain);
+		
 
 		return mav;
 	}
@@ -62,8 +87,12 @@ public class InquiryController extends SuperController{
 	 */
 	@RequestMapping(value = "/help/addInquiry.do")
 	@ResponseBody
-	public ModelAndView addInquiry(@ModelAttribute("initBoxs") SBox sBox) {
-		
+	public ModelAndView addInquiry(@ModelAttribute("initBoxs") SBox sBox
+			, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET,POST");
+		response.setHeader("Access-Control-Max-Age", "360");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 		ModelAndView mav = new ModelAndView("jsonview");
 		SBox resultBox = inquiryService.addInquiry(sBox);
 		String qaId = resultBox.getString("QAID");
@@ -71,18 +100,19 @@ public class InquiryController extends SuperController{
 		mav.addObject("qaId", qaId);
 		return mav;
 	}
+	
 	/**
 	 * <pre>
-	 * 1:1등록 List 조회
+	 * 고객지원  1:1문의 사항 리스트   
 	 * </pre>
 	 * @author JUNG MI KIM
-	 * @since 2013. 10. 11.
+	 * @since 2013. 10. 14.
 	 * @version 1.0
 	 * @param sBox - null
 	 * @return
 	 */
 	@RequestMapping(value = "/help/getInquiryList.do")
-	public ModelAndView getInquiryList(@ModelAttribute("initBoxs") SBox sBox) {
+	public ModelAndView getInquiryList(@ModelAttribute("initBoxs") SBox sBox){
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("help/getInquiryList");
 		return mav;
@@ -91,7 +121,7 @@ public class InquiryController extends SuperController{
 	
 	/**
 	 * <pre>
-	 * 1:1등록 Ajax List 
+	 * 1:1등록  List  Ajax by BIZ_PORTAL   
 	 * </pre>
 	 * @author JUNG MI KIM
 	 * @since 2013. 10. 11.
@@ -108,9 +138,31 @@ public class InquiryController extends SuperController{
 		return mav;
 	}
 	
+	
 	/**
 	 * <pre>
-	 * 1:1등록  세부사항 등록 
+	 * 고객지원 1:1문의 사항 세부항목 
+	 * </pre>
+	 * @author JUNG MI KIM
+	 * @since 2013. 10. 14.
+	 * @version 1.0
+	 * @param qaId : 회원문의 답변순번
+	 * @return
+	 */
+	@RequestMapping(value = "/help/getInquiry.do")
+	public ModelAndView getInquiry(@RequestParam(value = "qaId", required = true) String qaId) {
+		
+		ModelAndView mav = new ModelAndView(); 
+		mav.setViewName("/help/getInquiry");  
+		mav.addObject("qaId", qaId);
+		
+		return mav;
+	}
+	
+	
+	/**
+	 * <pre>
+	 * 1:1등록  세부사항   Ajax by BIZ_PORTAL 
 	 * </pre>
 	 * @author JUNG MI KIM
 	 * @since 2013. 10. 11.
@@ -118,12 +170,12 @@ public class InquiryController extends SuperController{
 	 * @param qaId : 회원문의 답변순번
 	 * @return
 	 */
-	@RequestMapping(value = "/help/getInquiry.do")
+	@RequestMapping(value = "/help/getInquiryAjax.do")
 	public ModelAndView getInquiryDetail(@RequestParam(value = "qaId", required = true) String qaId) {
 		
 		ModelAndView mav = new ModelAndView(); 
 		
-		mav.setViewName("/help/getInquiry");  
+		mav.setViewName("/help/getInquiryAjax");  
 		mav.addObject("result", inquiryService.getInquiryDetail(qaId));
 		
 		return mav;
@@ -148,5 +200,6 @@ public class InquiryController extends SuperController{
 
 		return mav;
 	}
+	
 
 }

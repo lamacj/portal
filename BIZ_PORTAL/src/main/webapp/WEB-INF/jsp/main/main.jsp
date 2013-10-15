@@ -53,7 +53,7 @@ $(document).ready(function(){
 			<div class="inquiry">
 				<h2>1:1문의</h2>
 				<ul>
-					<li><a href="${HOME}/help/addInquiryForm.do">1:1문의</a></li>
+					<li><a href="${HOME}/help/getInquiryForm.do">1:1문의</a></li>
 				</ul>
 			</div> 
 			<div class="faq">

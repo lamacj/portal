@@ -11,7 +11,7 @@
 <html class="no-js" lang="ko">
 <!--<![endif]-->
 <head>
-<title>일대일 문의 </title>
+<title>공지사항 </title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- TODO 운영에서는 삭제  -->
 <meta http-equiv="Cache-Control" content="No-Cache"/>
@@ -25,60 +25,36 @@
 <script type="text/javascript" src="${JS}/front/frontui.js"></script>
 <script type="text/javascript" src="${JS}/respond/respond.src.js"></script>
 
-<script type="text/javascript">
+<c:set var="ntcId" value="${ntcId}"/> 
 
+<script type="text/javascript">
 $(document).ready(function(){
-	jQuery.support.cors = true; 		 
-	//공통 함수 : 전체 공지사항 List 검색  
-	 getList(1);
-     
-	 /**
-	  * <pre>
-	  *    Ajax를 활용한 Paging 처리 함수
-	  * </pre>
-	  * @author JUNG MI KIM
-	  * @since 2013. 09. 26
-	  */
-	 getAjaxPage = function(num){
-	 	 $numParam = num;
-	 	
-	 	 getList(num);
-	 };
-		 
+	jQuery.support.cors = true; 	 
+
+	 getNotice("${ntcId}");
+	 
 });
 
-//공통함수 (Ajax) - 조회 List
-function getList(num){
-	 
-	 $.ajax({
-			url: "${HOME}/help/getInquiryListAjaxView.do",
+function getNotice(ntcId){
+	jQuery.support.cors = true; 
+	  $.ajax({
+			url: "${HOME}/help/getNoticeAjax.do",
 			crossDomain: true,
 			type: "post",
 			dataType: "html",
-			data:{num:num},
+			data:{ntcId:ntcId},
 			async: false,
 			error: function(result){
 				alert(result);
 			},
 			success: function(result){
-				$("#inquiryList").html(result).trigger("create");
-				
-				var getPage = $("#getPage").val();
-				$("#getPageView").html(getPage);
+				$("#notice").html(result);
 			}
 		}
-	); 
-}
+	);}
 
-
-function getInquiry(qaId){
-	
-	location.href = '${HOME}/help/getInquiry.do?qaId='+qaId;
-}
-
-function getInquiryForm(){
-	
-	location.href = '${HOME}/help/getInquiryForm.do';
+function getNoticeList(){
+	location.href = '${HOME}/help/getNoticeList.do';
 }
 
 </script>
@@ -87,29 +63,21 @@ function getInquiryForm(){
 <body>
 	
 	<!-- contentArea -->
-	<div class="contentArea sub05" ><!-- menu별 이미지 class sub00 -->
+	<div class="contentArea sub05"><!-- menu별 이미지 class sub00 -->
 		<!-- content -->
 		<section id="content">
-			<h2 class="tit_sub0502">1:1 문의</h2>
-			<p class="under_h2_sub0502">채권관리 서비스에 대해 궁금하신 사항을 질문해 주세요</p>
-			<div id="inquiryListDiv">
-				<h3 class="first2"><img src="${IMG}/common/h3_customer_inquiry.gif" alt="이전 문의 사항" /></h3>
+			<h2 class="tit_sub0501">공지사항</h2>
+			<p class="under_h2_sub0501">서비스 이용에 관련된 다양한 소식들을 확인하실 수 있습니다.</p>
 			
-				<div class="inquiryList" id="inquiryList"></div>
-		
-				<div class="btmBtnWrap pageBtnBox">
-					<p class="leftBtn btnWrap">
-						<a href="#" onclick="javascript:getInquiryForm()" class="btnType btn_inqpost">1:1 문의 등록</a>
-					</p>
-					<div class="paging" id="getPageView"></div>
-				</div>
-			</div>	
+			<div id="notice">
+			</div>
+			
 		</section>
-		<!-- //content -->
+		
+	
+	<!-- //content -->
 	</div>
 	<!-- //contentArea -->
-
-
 </body>
 </html>
 
